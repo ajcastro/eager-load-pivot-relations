@@ -1,6 +1,7 @@
 # Laravel Eloquent: Eager Load Pivot Relations
 
-Eager load pivot relations for Laravel Eloquent's BelongsToMany relation.
+Eager load pivot relations for Laravel Eloquent's BelongsToMany relation.  
+Medium Story: https://medium.com/@ajcastro29/laravel-eloquent-eager-load-pivot-relations-dba579f3fd3a
 
 ## Installation
 
