@@ -40,7 +40,6 @@ plan_item (pivot for plans and items)
 ```php
 
 class Unit extends \Eloquent {
-    protected $fillable = [];
 }
 
 use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
@@ -51,8 +50,6 @@ class Item extends \Eloquent
     // Plan::items() relation.
     use EagerLoadPivotTrait;
 
-    protected $fillable = [];
-
     public function plans()
     {
         return $this->belongsToMany('Plan', 'plan_item');
@@ -61,8 +58,6 @@ class Item extends \Eloquent
 
 class Plan extends \Eloquent
 {
-    protected $fillable = [];
-
     public function items()
     {
         return $this->belongsToMany('Item', 'plan_item')
@@ -112,17 +107,14 @@ return Plan::with([
 ])->get();
 ```
 
-## TODO/Need Help:
+## Custom Pivot Accessor
 
-I would like to support customising the `pivot` keyword.
-If you chain the `as()` method to define the __"pivot accessor"__ of the `BelongsToMany` relation,
-it should use the defined pivot accessor.
+You can customize the __"pivot accessor"__, so instead of using the keyword `pivot`, we can declare it as `planItem`.
+Just chain the `as()` method in the definition of the `BelongsToMany` relation.
 
 ```php
 class Plan extends \Eloquent
 {
-    protected $fillable = [];
-
     public function items()
     {
         return $this->belongsToMany('Item', 'plan_item')
@@ -133,8 +125,33 @@ class Plan extends \Eloquent
 }
 
 ```
-So instead of using `pivot`, we can eager load it by defined pivot accessor `planItem`.
+
+Make sure we also use the trait
+to our main model which is the `Plan` model, because the package needs to acess 
+the belongsToMany relation (`items` relation) to recognize the used pivot acessor.
+
+```php
+use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
+
+class Plan extends \Eloquent
+{
+    use EagerLoadPivotTrait;
+}
+
 
 ```
+
+So instead of using `pivot`, we can eager load it by defined pivot accessor `planItem`.
+
+```php
 return Plan::with('items.planItem.unit')->get();
+```
+```php
+
+$plan = Plan::with('items.planItem.unit');
+
+foreach ($plan->items as $item) {
+    $unit = $item->planItem->unit;
+    echo $unit->name;
+}
 ```
