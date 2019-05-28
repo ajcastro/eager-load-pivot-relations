@@ -87,11 +87,15 @@ class EagerLoadPivotBuilder extends Builder
      */
     protected function getPivotEagerLoadRelations($pivotAccessor)
     {
-        $relations = array_filter(array_keys($this->eagerLoad), function ($relation) use ($pivotAccessor) {
+        $relations = array_filter($this->eagerLoad, function ($relation) use ($pivotAccessor) {
             return $relation != $pivotAccessor && str_contains($relation, $pivotAccessor);
-        });
-        return array_map(function ($relation) use ($pivotAccessor) {
-            return substr($relation, strlen("{$pivotAccessor}."));
-        }, $relations);
+        }, ARRAY_FILTER_USE_KEY);
+
+        return array_combine(
+            array_map(function ($relation) use ($pivotAccessor) {
+                return substr($relation, strlen("{$pivotAccessor}."));
+            }, array_keys($relations)),
+            array_values($relations)
+        );
     }
 }
