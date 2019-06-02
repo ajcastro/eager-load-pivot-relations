@@ -155,3 +155,6 @@ foreach ($plan->items as $item) {
     echo $unit->name;
 }
 ```
+
+## Other Examples and Use-cases
+https://github.com/ajcastro/eager-load-pivot-relations-examples
