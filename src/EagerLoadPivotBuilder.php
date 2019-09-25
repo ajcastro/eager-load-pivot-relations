@@ -5,6 +5,8 @@ namespace AjCastro\EagerLoadPivotRelations;
 use Closure;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class EagerLoadPivotBuilder extends Builder
 {
@@ -74,7 +76,7 @@ class EagerLoadPivotBuilder extends Builder
      */
     protected function eagerLoadPivotRelations($models, $pivotAccessor)
     {
-        $pivots = array_pluck($models, $pivotAccessor);
+        $pivots = Arr::pluck($models, $pivotAccessor);
         $pivots = head($pivots)->newCollection($pivots);
         $pivots->load($this->getPivotEagerLoadRelations($pivotAccessor));
     }
@@ -88,7 +90,7 @@ class EagerLoadPivotBuilder extends Builder
     protected function getPivotEagerLoadRelations($pivotAccessor)
     {
         $relations = array_filter($this->eagerLoad, function ($relation) use ($pivotAccessor) {
-            return $relation != $pivotAccessor && str_contains($relation, $pivotAccessor);
+            return $relation != $pivotAccessor && Str::contains($relation, $pivotAccessor);
         }, ARRAY_FILTER_USE_KEY);
 
         return array_combine(
