@@ -3,8 +3,8 @@
 namespace AjCastro\EagerLoadPivotRelations;
 
 use Closure;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -20,15 +20,16 @@ class EagerLoadPivotBuilder extends Builder
      *
      * @param  array  $models
      * @param  string  $name
-     * @param  \Closure  $constraints
+     * @param Closure $constraints
      * @return array
      */
-    protected function eagerLoadRelation(array $models, $name, Closure $constraints)
+    protected function eagerLoadRelation(array $models, $name, Closure $constraints): array
     {
         $this->watchForPivotAccessors($name);
 
         if ($this->isPivotAccessor($name)) {
             $this->eagerLoadPivotRelations($models, $name);
+
             return $models;
         }
 
@@ -41,11 +42,11 @@ class EagerLoadPivotBuilder extends Builder
      * @param  string $name
      * @return void
      */
-    protected function watchForPivotAccessors($name)
+    protected function watchForPivotAccessors(string $name): void
     {
         $model = $this->getModel();
 
-        if (!method_exists($model->newInstance(), $name)) {
+        if (! method_exists($model->newInstance(), $name)) {
             return;
         }
 
@@ -60,9 +61,9 @@ class EagerLoadPivotBuilder extends Builder
      * If relation name is a pivot accessor.
      *
      * @param  string  $name
-     * @return boolean
+     * @return bool
      */
-    protected function isPivotAccessor($name)
+    protected function isPivotAccessor(string $name): bool
     {
         return in_array($name, static::$knownPivotAccessors);
     }
@@ -70,11 +71,11 @@ class EagerLoadPivotBuilder extends Builder
     /**
      * Eager load pivot relations.
      *
-     * @param string $pivotAccessor
      * @param  array $models
+     * @param string $pivotAccessor
      * @return void
      */
-    protected function eagerLoadPivotRelations($models, $pivotAccessor)
+    protected function eagerLoadPivotRelations(array $models, string $pivotAccessor): void
     {
         $pivots = Arr::pluck($models, $pivotAccessor);
         $pivots = head($pivots)->newCollection($pivots);
@@ -87,15 +88,15 @@ class EagerLoadPivotBuilder extends Builder
      * @param string $pivotAccessor
      * @return array
      */
-    protected function getPivotEagerLoadRelations($pivotAccessor)
+    protected function getPivotEagerLoadRelations(string $pivotAccessor): array
     {
-        $relations = array_filter($this->eagerLoad, function ($relation) use ($pivotAccessor) {
-            return $relation != $pivotAccessor && Str::contains($relation, $pivotAccessor);
+        $relations = array_filter($this->eagerLoad, static function ($relation) use ($pivotAccessor) {
+            return $relation !== $pivotAccessor && Str::contains($relation, $pivotAccessor);
         }, ARRAY_FILTER_USE_KEY);
 
         return array_combine(
-            array_map(function ($relation) use ($pivotAccessor) {
-                return substr($relation, strlen("{$pivotAccessor}."));
+            array_map(static function ($relation) use ($pivotAccessor) {
+                return substr($relation, mb_strlen("{$pivotAccessor}."));
             }, array_keys($relations)),
             array_values($relations)
         );

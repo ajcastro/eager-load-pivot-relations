@@ -2,15 +2,18 @@
 
 namespace AjCastro\EagerLoadPivotRelations;
 
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+
 trait EagerLoadPivotTrait
 {
     /**
      * Create a new Eloquent query builder for the model.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder|static
+     * @param QueryBuilder $query
+     * @return EloquentBuilder
      */
-    public function newEloquentBuilder($query)
+    public function newEloquentBuilder(QueryBuilder $query): EloquentBuilder
     {
         return new EagerLoadPivotBuilder($query);
     }
