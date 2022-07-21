@@ -90,7 +90,7 @@ class EagerLoadPivotBuilder extends Builder
     protected function getPivotEagerLoadRelations($pivotAccessor)
     {
         $relations = array_filter($this->eagerLoad, function ($relation) use ($pivotAccessor) {
-            return $relation != $pivotAccessor && Str::contains($relation, $pivotAccessor);
+            return $relation !== $pivotAccessor && Str::contains($relation, $pivotAccessor);
         }, ARRAY_FILTER_USE_KEY);
 
         return array_combine(
