@@ -55,4 +55,47 @@ class PivotTest extends TestCase
         $this->assertInstanceOf(Car::class, $user->cars[0]);
         $this->assertInstanceOf(Color::class, $user->cars[0]->pivot->color);
     }
+
+    public function test_it_can_use_with_custom_pivot_relations()
+    {
+        $car = Car::factory()->create();
+        $pivots = CarUser::factory(['car_id' => $car->id])->count( 2 )->create();
+
+        $car = Car::with([
+            'users',
+            'users.car_user.color'
+        ])
+        ->find($car->id);
+
+        $this->assertInstanceOf(User::class, $car->users[0]);
+        $this->assertInstanceOf(Color::class, $car->users[0]->car_user->color);
+    }
+
+    public function test_it_can_use_load_custom_pivot_relations()
+    {
+        $car = Car::factory()->create();
+        $pivots = CarUser::factory(['car_id' => $car->id])->count( 2 )->create();
+
+        $car->load([
+            'users',
+            'users.car_user.color'
+        ]);
+
+        $this->assertInstanceOf(User::class, $car->users[0]);
+        $this->assertInstanceOf(Color::class, $car->users[0]->car_user->color);
+    }
+
+    public function test_it_can_use_load_missing_custom_pivot_relations()
+    {
+        $car = Car::factory()->create();
+        $pivots = CarUser::factory(['car_id' => $car->id])->count( 2 )->create();
+
+        $car->loadMissing([
+            'users',
+            'users.car_user.color'
+        ]);
+
+        $this->assertInstanceOf(User::class, $car->users[0]);
+        $this->assertInstanceOf(Color::class, $car->users[0]->car_user->color);
+    }
 }

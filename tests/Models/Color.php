@@ -15,6 +15,16 @@ class Color extends Model
         'name'
     ];
 
+    public function cars()
+    {
+        return $this->belongsToMany(Car::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     protected static function newFactory()
     {
         return ColorFactory::new();

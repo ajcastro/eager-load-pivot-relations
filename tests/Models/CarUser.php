@@ -27,6 +27,11 @@ class CarUser extends Pivot
         return $this->belongsTo(Color::class);
     }
 
+    public function tires()
+    {
+        return $this->hasMany(Tire::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

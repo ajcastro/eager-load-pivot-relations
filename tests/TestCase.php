@@ -18,8 +18,10 @@ class TestCase extends BaseTestCase
     {
         ( new \CreateUsersTable )->up();
         ( new \CreatePasswordResetsTable )->up();
+        ( new \CreateBrandsTable )->up();
         ( new \CreateCarsTable )->up();
         ( new \CreateColorsTable )->up();
         ( new \CreateCarUserTable )->up();
+        ( new \CreateTiresTable )->up();
     }
 }

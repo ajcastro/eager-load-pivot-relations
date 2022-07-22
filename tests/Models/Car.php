@@ -15,14 +15,20 @@ class Car extends Model
     protected $table = 'cars';
     protected $fillable = [
         'model',
-        'make'
+        'brand_id',
     ];
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 
     public function users()
     {
         return $this->belongsToMany(User::class)
             ->withPivot('color_id')
-            ->using(CarUser::class);
+            ->using(CarUser::class)
+            ->as('car_user');
     }
 
     protected static function newFactory()

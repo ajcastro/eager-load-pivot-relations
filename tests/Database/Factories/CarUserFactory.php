@@ -5,6 +5,7 @@ namespace AjCastro\EagerLoadPivotRelations\Tests\Database\Factories;
 use AjCastro\EagerLoadPivotRelations\Tests\Models\Car;
 use AjCastro\EagerLoadPivotRelations\Tests\Models\CarUser;
 use AjCastro\EagerLoadPivotRelations\Tests\Models\Color;
+use AjCastro\EagerLoadPivotRelations\Tests\Models\Tire;
 use AjCastro\EagerLoadPivotRelations\Tests\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -28,5 +29,12 @@ class CarUserFactory extends Factory
                 return User::factory()->create()->id;
             }
         ];
+    }
+
+    public function configure()
+    {
+        $this->afterCreating(function($car_user) {
+           Tire::factory(['car_user_id' => $car_user->id])->count(4)->create();
+        });
     }
 }

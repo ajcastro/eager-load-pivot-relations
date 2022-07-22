@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCarsTable extends Migration
+class CreateTiresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateCarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('cars', static function (Blueprint $table) {
+        Schema::create('tires', static function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('model');
+            $table->string('name');
+            $table->integer('profile_depth');
 
-            $table->bigInteger('brand_id');
-            $table->foreign('brand_id')->references('id')->on('brands')->cascadeOnDelete();
+            $table->bigInteger('car_user_id');
+            $table->foreign('car_user_id')->references('id')->on('car_user')->cascadeOnDelete();
 
             $table->timestamps();
         });
@@ -31,6 +32,6 @@ class CreateCarsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cars');
+        Schema::dropIfExists('tires');
     }
 }
