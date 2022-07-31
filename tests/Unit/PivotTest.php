@@ -22,7 +22,7 @@ class PivotTest extends TestCase
             'cars',
             'cars.pivot.color'
         ])
-        ->find($user->id);
+            ->find($user->id);
 
         $this->assertInstanceOf(Car::class, $user->cars[0]);
         $this->assertInstanceOf(Color::class, $user->cars[0]->pivot->color);
@@ -65,7 +65,7 @@ class PivotTest extends TestCase
             'users',
             'users.car_user.color'
         ])
-        ->find($car->id);
+            ->find($car->id);
 
         $this->assertInstanceOf(User::class, $car->users[0]);
         $this->assertInstanceOf(Color::class, $car->users[0]->car_user->color);

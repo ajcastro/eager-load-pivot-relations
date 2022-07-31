@@ -15,7 +15,7 @@ class CreateTiresTable extends Migration
     {
         Schema::create('tires', static function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('brand');
             $table->integer('profile_depth');
 
             $table->bigInteger('car_user_id');

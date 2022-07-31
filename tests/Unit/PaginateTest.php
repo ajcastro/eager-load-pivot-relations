@@ -21,7 +21,7 @@ class PaginateTest extends TestCase
             'cars',
             'cars.pivot.color'
         ])
-        ->paginate(10);
+            ->paginate(10);
 
         $this->assertInstanceOf(LengthAwarePaginator::class, $users);
     }

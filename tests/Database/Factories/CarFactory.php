@@ -6,6 +6,9 @@ use AjCastro\EagerLoadPivotRelations\Tests\Models\Brand;
 use AjCastro\EagerLoadPivotRelations\Tests\Models\Car;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\AjCastro\EagerLoadPivotRelations\Tests\Models\Car>
+ */
 class CarFactory extends Factory
 {
     protected $model = Car::class;
