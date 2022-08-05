@@ -70,8 +70,8 @@ class EagerLoadPivotBuilder extends Builder
     /**
      * Eager load pivot relations.
      *
-     * @param string $pivotAccessor
      * @param  array $models
+     * @param  string $pivotAccessor
      * @return void
      */
     protected function eagerLoadPivotRelations($models, $pivotAccessor)

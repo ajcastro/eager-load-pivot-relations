@@ -30,11 +30,4 @@ class CarUserFactory extends Factory
             }
         ];
     }
-
-    public function configure()
-    {
-        $this->afterCreating(function($car_user) {
-           Tire::factory(['car_user_id' => $car_user->id])->count(4)->create();
-        });
-    }
 }
