@@ -9,16 +9,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
- * @property int $id
- * @property string $name
- * @property string $email
- * @property string $password
+ * @property int                             $id
+ * @property string                          $name
+ * @property string                          $email
+ * @property string                          $password
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \AjCastro\EagerLoadPivotRelations\Tests\Database\Factories\UserFactory factory(...$parameters)
- * @method static Builder|User newModelQuery()
- * @method static Builder|User newQuery()
- * @method static Builder|User query()
+ * @method static Builder|User                                                           newModelQuery()
+ * @method static Builder|User                                                           newQuery()
+ * @method static Builder|User                                                           query()
+ *
  * @mixin \Illuminate\Database\Eloquent
  */
 class User extends Authenticatable

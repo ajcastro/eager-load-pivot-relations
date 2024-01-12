@@ -12,41 +12,41 @@ class CountTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_it_can_use_with_count_pivot_relations()
+    public function testItCanUseWithCountPivotRelations()
     {
         $this->markTestSkipped('This could be a new feature, see #6');
 
         $user = User::factory()->create();
-        $pivots = CarUser::factory( [ 'user_id' => $user->id ] )->count( 2 )->create();
+        $pivots = CarUser::factory(['user_id' => $user->id])->count(2)->create();
         $tires = rand(4, 8);
 
-        foreach($pivots as $pivot) {
+        foreach ($pivots as $pivot) {
             Tire::factory(['car_user_id' => $pivot->id])
                 ->count($tires)
                 ->create();
         }
 
-        $user = User::with( [
+        $user = User::with([
             'cars',
             'cars.pivot.color',
-            'cars.pivot' => function($query) {
+            'cars.pivot' => function ($query) {
                 return $query->withCount('tires');
-            }
-        ] )
-            ->find( $user->id );
+            },
+        ])
+            ->find($user->id);
 
         $this->assertSame($tires, $user->cars[0]->pivot->tires_count);
     }
 
-    public function test_it_can_use_load_count_pivot_relations()
+    public function testItCanUseLoadCountPivotRelations()
     {
         $this->markTestSkipped('This could be a new feature, see #6');
 
         $user = User::factory()->create();
-        $pivots = CarUser::factory( [ 'user_id' => $user->id ] )->count( 2 )->create();
+        $pivots = CarUser::factory(['user_id' => $user->id])->count(2)->create();
         $tires = rand(4, 8);
 
-        foreach($pivots as $pivot) {
+        foreach ($pivots as $pivot) {
             Tire::factory(['car_user_id' => $pivot->id])
                 ->count($tires)
                 ->create();
@@ -56,7 +56,7 @@ class CountTest extends TestCase
         $user->load([
             'cars',
             'cars.pivot.color',
-            'cars.pivot' => function($query) {
+            'cars.pivot' => function ($query) {
                 return $query->withCount('tires');
             }]);
 

@@ -13,7 +13,7 @@ class Brand extends Model
     protected $table = 'brands';
     protected $fillable = [
         'name',
-        'logo'
+        'logo',
     ];
 
     public function cars()

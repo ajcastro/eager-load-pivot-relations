@@ -2,16 +2,16 @@
 
 namespace AjCastro\EagerLoadPivotRelations;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class EagerLoadPivotBelongsToMany extends BelongsToMany
 {
     /**
      * Execute the query as a "select" statement.
      *
-     * @param  array  $columns
+     * @param array $columns
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -37,7 +37,7 @@ class EagerLoadPivotBelongsToMany extends BelongsToMany
         if (count($models) > 0) {
             $pivotEagerLoad = $this->getPivotEagerLoads($builder);
 
-            if (!empty($pivotEagerLoad)) {
+            if (! empty($pivotEagerLoad)) {
                 $this->eagerLoadPivotRelations($models, $pivotEagerLoad);
             }
 
@@ -59,7 +59,7 @@ class EagerLoadPivotBelongsToMany extends BelongsToMany
         // Only return the eagerLoad `pivot.*` but not the `pivot`
         // because `pivot.*` contains the actual relations we want to eager load from the pivot model.
         $pivotEagerLoad = array_filter($builder->getEagerLoads(), function ($relation) {
-            return Str::startsWith($relation, $this->accessor . '.');
+            return Str::startsWith($relation, $this->accessor.'.');
         }, ARRAY_FILTER_USE_KEY);
 
         $builder->without(array_merge(

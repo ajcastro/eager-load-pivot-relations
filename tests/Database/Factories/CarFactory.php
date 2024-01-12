@@ -16,11 +16,10 @@ class CarFactory extends Factory
     public function definition()
     {
         return [
-            'model' => $this->faker->words(rand(2, 4), true),
-            'brand_id' => function()
-            {
+            'model'    => $this->faker->words(rand(2, 4), true),
+            'brand_id' => function () {
                 return Brand::factory()->create()->id;
-            }
+            },
         ];
     }
 }
